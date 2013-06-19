@@ -1,0 +1,28 @@
+/* 
+    Document   : style
+    Created on : Jun 18, 2013, 11:10:13 AM
+    Author     : tom
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+img{
+    display: inline-block;
+    max-height: 150px;
+    max-width: 150px;
+}
+
+.img_false{
+    border: 10px red solid;
+}
+
+.img_true{
+    border: 10px green solid;
+}
+
+
+

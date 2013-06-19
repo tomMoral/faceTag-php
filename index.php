@@ -40,9 +40,13 @@
             function onready(xhr, $q) {
                 return function(){
                     if (xhr.readyState === 4 && xhr.status === 200) {
+                        console.log(xhr.responseText);
                         var data = JSON.parse(xhr.responseText);
                         console.log(data['work']+"\n\n\n");
-                        display($q).innerHTML += data['html'] + "</br>";
+                        if ($q === 'FD')
+                            display($q).innerHTML += data['html'] + "</br>";
+                        else
+                            display($q).innerHTML = data['html'] + "</br>";
                         if(data['work'] == null) return;
                         if($q === 'GIG'){
                             $page ++;
@@ -65,90 +69,15 @@
                 xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
                 xhr.send(job);
                 xhr.onreadystatechange = onready(xhr, $q);
-                if($q === 'IL')
-                    xhr.onprogress = function(e) {
-                        display('IL').innerHTML += e.loaded +' / '+ e.total+'</br>';
-                    };
             }
             
             start('GIG');
-            
-            
-            /*function onreadyGIG(xhr) {
-                return function(){
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        
-                        alert("GIG_" +$page+"   "+xhr.responseText);
-                        var data = JSON.parse(xhr.responseText);
-                        if(data == null) return;
-                        state.innerHTML += "Found "+ data.length + " pics in the " + $page + " th page</br>";
-                        var n_xhr = new XMLHttpRequest();
-                        var $urls = encodeURIComponent(xhr.responseText),
-                            $query = encodeURIComponent('<?echo $query;?>');
-                        n_xhr.open('POST','ImageLoader.php', true);
-                        n_xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-                        n_xhr.send('urls=' + $urls + '&query=' + $query);
-                        console.log("Load pictures : " + $urls);
-                        n_xhr.onreadystatechange = onreadyIL(n_xhr);
-                    }
-                };
-            };
-            
-            function onreadyIL(xhr) {
-                return function(){
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        var data = JSON.parse(xhr.responseText);
-                        state.innerHTML += "Load "+ data.length + " pics in the " + $page + " th page</br>";
-                        if(data.length == 0) return;
-                        var n_xhr = new XMLHttpRequest();
-                        var $files = encodeURIComponent(xhr.responseText);
-                        n_xhr.open('POST','FaceDetect.php', true);
-                        n_xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-                        n_xhr.send('files=' + $files);
-                        console.log("Detect face in : " + $files);
-                        n_xhr.onreadystatechange = onreadyFD(n_xhr);
-                        
-                        //Load the next page
-                        var g_xhr = new XMLHttpRequest();
-                        $page ++;
-                        g_xhr.open('POST','GoogleImageGraber.php', true);
-                        g_xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-                        g_xhr.send('query=' + $query + '&page=' + $page);
-                        g_xhr.onreadystatechange = onreadyGIG(g_xhr);
-                    }
-                };
-            };
-            
-            function onreadyFD(xhr) {
-                return function(){
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        alert(xhr.responseText);
-                        var data = JSON.parse(xhr.responseText);
-                        state.innerHTML += data['stderr'];
-                        alert(data['count']);
-                        for(var i = 0; i < data['count'] ; i++){
-                            state.innerHTML += '<img src="'+ data[i] +'">'
-                        }
-                    }
-                };
-            };
-            
-            var xhr = new XMLHttpRequest();
-            
-            xhr.open('POST','GoogleImageGraber.php', true);
-            xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-            xhr.send('query=' + $query + '&page=' + $page);
-            xhr.onreadystatechange = onreadyGIG(xhr);
-                    */
-            
         </script>
             
         
         
         
             <?php
-
-            // put your code here
         }
         else{
         ?>

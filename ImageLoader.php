@@ -4,15 +4,16 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
+error_reporting(E_ERROR);
 function save($urls, $query){
-    $dirname = "images/".$query.'/';
-    mkdir($dirname);
+    $dirname = "image/".$query.'/';
+    if(!file_exists($dirname))
+        mkdir($dirname);
     $files = array();
     $success = 0;
     foreach($urls as $url){
-        $url = preg_replace("/ /", "%20", $url);
-        $filename = urldecode(array_pop(preg_split('/\//', $url)));
+        $part = parse_url($url);
+        $filename = basename($part['path']);
         $n = 0;
         $ext = '.'.pathinfo($filename, PATHINFO_EXTENSION);
         $base = pathinfo($filename, PATHINFO_FILENAME );
