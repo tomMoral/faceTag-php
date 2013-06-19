@@ -42,13 +42,11 @@
                     if (xhr.readyState === 4 && xhr.status === 200) {
                         console.log(xhr.responseText);
                         var data = JSON.parse(xhr.responseText);
-                        console.log(data['work']+"\n\n\n");
                         if ($q === 'FD')
                             display($q).innerHTML += data['html'] + "</br>";
                         else
                             display($q).innerHTML = data['html'] + "</br>";
-                        if(data['work'] == null) return;
-                        if($q === 'GIG'){
+                        if($q === 'GIG' && data['work'] != null){
                             $page ++;
                             add_work($q, "query=<?echo $query;?>&page=" + $page);
                         }

@@ -34,7 +34,6 @@ function add_label(xhr, cb){
 function load_pics(req){
     return (function() { 
         if (req.readyState === 4 && req.status === 200) {
-            alert('loaded \n :' + req.responseText);
             var data = JSON.parse(req.responseText);
             var div_pics = document.getElementById("pictures");
             while(div_pics.childElementCount > 0){
@@ -75,7 +74,11 @@ function comboBox(event){
         xhr.send("label="+label);
         xhr.onreadystatechange = add_label(xhr,select);
     }
-    else if (val != 'remove' && val != last_state){
+    else if ( val !== last_state){
+        if(val === 'remove'){
+            val = 0;
+            alert(val);
+        }
         var xhr = new XMLHttpRequest();
         xhr.open('POST',"get_label.php", true);
         xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
@@ -91,20 +94,22 @@ function saved(req){
     return (function() { 
         if (req.readyState === 4 && req.status === 200) {
             alert('Saved!');
-        }})
+        }});
 }
 
 function save(){
     var images_true = document.getElementsByClassName("img_true");
     var images_false = document.getElementsByClassName("img_false");
     var lab = document.getElementById('combo').value;
-    if( lab === 'remove' || lab === 'add') return;
+    if(  lab === 'add') return;
+    if(lab === 'remove')
+        lab ='R';
     var post = 'label='+ lab + '&list_t=';
     var i =0;
     var tmp = images_true.length + images_false.length;
     tagged +=  tmp;
     toTag -= tmp;
-    while(images_true.length > 0){
+    while(images_true.length > 0 && lab !== 'R'){
         post += images_true[i].id + ',';
         images_true[i].parentNode.removeChild(images_true[i]);
     }
@@ -129,7 +134,7 @@ function csv(req){
         if (req.readyState === 4 && req.status === 200) {
             var div_pics = document.getElementById("pictures");
             div_pics.innerHTML =  req.responseText;
-        }})
+        }});
 }
 
 function get(){
@@ -141,4 +146,5 @@ function get(){
     xhr.onreadystatechange = csv(xhr);
     
 }
+
 

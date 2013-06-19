@@ -12,7 +12,7 @@ $lab = $_POST['label'];
 
 $pics = $db->query("SELECT * FROM DB_contents WHERE labels NOT LIKE ?", array("%,$lab:_%"));
 $count = $db->query("SELECT count(id) as qte  FROM DB_contents");
-$pics['tot'] = count($pics);
-$pics['count'] = $count[0]['qte'];
+$pics['count'] = count($pics);
+$pics['tot'] = $count[0]['qte'];
 echo json_encode($pics);
 ?>

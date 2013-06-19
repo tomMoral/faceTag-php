@@ -2,4 +2,6 @@ images/*
 image/*
 .DS_Store
 nbproject/*
-
+*.pyc
+model_face
+*.swp
