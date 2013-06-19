@@ -14,20 +14,19 @@ function face_detect($files_list){
             $files_cmd .= (($n == 0)?"'":"' '") . $f->filename;
     $files_cmd .= "'";
     
-    $cmd .= "python ~/prog/github/face/benchmark/cluster/face_detect.py -r $files_cmd ";
+    $cmd .= "python face_detect.py $files_cmd ";
     $files = exec( $cmd , $output);
 
     $res['next'] = 0;
     $res['html'] = "";
    include 'database.php';
    $dbh = new Database();
-   $files = preg_split('/::/', $files);
-   foreach ($files as $f){
+   
+   foreach ($files as $output){
        $res['html'] .= "<img src='$f'/>";
        $dbh->query("INSERT IGNORE INTO DB_contents (path, labels) VALUES (?,?)",
                     array($f, ""));
     }
-           
     return $res;
 }
 
@@ -35,8 +34,6 @@ if(isset($_POST['files'])){
     $files = json_decode($_POST['files']);    
     header('Content-Type: application/json');
     echo json_encode(face_detect($files));
-    
-    
 }
 
 ?>

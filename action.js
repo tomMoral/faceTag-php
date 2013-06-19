@@ -93,7 +93,7 @@ function comboBox(event){
 function saved(req){
     return (function() { 
         if (req.readyState === 4 && req.status === 200) {
-            alert('Saved!');
+            alert('Saved!' + req.responseText);
         }});
 }
 
@@ -101,7 +101,7 @@ function save(){
     var images_true = document.getElementsByClassName("img_true");
     var images_false = document.getElementsByClassName("img_false");
     var lab = document.getElementById('combo').value;
-    if(  lab === 'add') return;
+    if(lab === 'add') return;
     if(lab === 'remove')
         lab ='R';
     var post = 'label='+ lab + '&list_t=';
@@ -132,8 +132,8 @@ function save(){
 function csv(req){
     return (function() { 
         if (req.readyState === 4 && req.status === 200) {
-            var div_pics = document.getElementById("pictures");
-            div_pics.innerHTML =  req.responseText;
+            var stat = document.getElementById("status");
+            stat.innerHTML =  req.responseText;
         }});
 }
 

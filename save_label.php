@@ -13,6 +13,6 @@
         $db->query("UPDATE DB_contents SET labels = CONCAT(CONCAT(labels, ','), ?) WHERE id IN (0".$list_n.");" , array($neg));
     }
     else{
-        $db->query("DELETE FROM `FaceTag`.`DB_contents` WHERE `DB_contents`.`id` IN (0".$list_n."));
+        $db->query("DELETE FROM `FaceTag`.`DB_contents` WHERE `DB_contents`.`id` IN (0".$list_n.")");
     }
 ?>

@@ -2,6 +2,7 @@
     <head>
         <link rel="stylesheet" type="text/css" href="style.css">
         <script src="action.js" type="text/javascript"></script>
+        <title>Face Tagger</title>
     </head>
 
 
@@ -33,6 +34,7 @@ $pics = $db->query("SELECT *  FROM DB_contents");
 
 echo "Pics grab : <button onclick='save()'>Save</button><button onclick='get()'>Get</button></br>";
 echo '<div id="pictures">';
+echo '<p id=status>There is '.count($pics).' pictures in the db</p>';
 
 $handle_click = '<img class="img_neu" ';
 $handle_click .= 'oncontextmenu="return false;" ';

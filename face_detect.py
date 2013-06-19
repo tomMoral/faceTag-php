@@ -31,8 +31,6 @@ def face_detect(pic_path, face_detector, align, lbp_generator, saveFile):
     #If it does not exist, it will be created here
     dirname = os.path.dirname(pic_path)
     dirname = os.path.join(dirname, 'Computed')
-    if not os.path.exists(dirname):
-        os.mkdir(dirname)
 
     #Detect Faces with the face Detector of CV2
     im = cv2.imread(pic_path, cv2.CV_LOAD_IMAGE_GRAYSCALE)
@@ -74,17 +72,14 @@ def face_detect(pic_path, face_detector, align, lbp_generator, saveFile):
         roi_crs = imresize(roi_c, (250, 250))
         roi_pil = Image.fromarray(roi_crs)
         roi_pil.save(fname)
-        res.append(fname)
+        print fname
         saveFile.writerow(row)
-    return res
 
 
 def main():
     parser = argparse.ArgumentParser(description=('Run face clustering on a'
                                                   ' set of pictures.'))
     parser.add_argument('files', metavar='<file path>', type=str, nargs='+',
-                        help='Pictures to detect faces')
-    parser.add_argument('-r', action='store_true',
                         help='Pictures to detect faces')
     args = parser.parse_args()
     
@@ -96,20 +91,18 @@ def main():
 
     dirname = os.path.dirname(args.files[0])
     dirname = os.path.join(dirname, 'Computed')
+    if not os.path.exists(dirname):
+        os.mkdir(dirname)
     savename = os.path.join(dirname, "data.csv")
     saveCSV = csv.writer(open(savename, "a"))
    
-    res = []
     for f in args.files: 
         if os.path.splitext(f)[1][1:] in \
           ['jpg', 'jpeg', 'png', 'bmp', 'dib', 'jpe', 
            'jp2', 'pbm', 'ppm','tiff','tif'] and \
           os.path.exists(f):
-            print f
-            res.extend(face_detect(f, face_detector, align, lbpGen, saveCSV))
+            face_detect(f, face_detector, align, lbpGen, saveCSV)
             os.remove(f)
-    if args.r:
-        print "::".join(res)
 
 if __name__ == '__main__':
     main()

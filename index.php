@@ -46,7 +46,7 @@
                             display($q).innerHTML += data['html'] + "</br>";
                         else
                             display($q).innerHTML = data['html'] + "</br>";
-                        if($q === 'GIG' && data['work'] != null){
+                        if($q === 'GIG' && data['work'] != null ){
                             $page ++;
                             add_work($q, "query=<?echo $query;?>&page=" + $page);
                         }

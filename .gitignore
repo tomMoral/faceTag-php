@@ -5,3 +5,4 @@ nbproject/*
 *.pyc
 model_face
 *.swp
+database/*
