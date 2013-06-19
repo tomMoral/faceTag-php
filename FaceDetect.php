@@ -13,7 +13,7 @@ function face_detect($files_list){
         if($f->status == 1)
             $files_cmd .= (($n == 0)?"'":"' '") . $f->filename;
     $files_cmd .= "'";
-    $cmd .= "python ~/prog/github/face/benchmark/cluster/face_detect.py -r $files_cmd 2>&1";
+    $cmd .= "python ~/prog/github/face/benchmark/cluster/face_detect.py -r $files_cmd";
     $files = exec( $cmd , $output);
     $res['next'] = 0;
     $res['html'] = "";
