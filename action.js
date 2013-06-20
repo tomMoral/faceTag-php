@@ -146,5 +146,3 @@ function get(){
     xhr.onreadystatechange = csv(xhr);
     
 }
-
-

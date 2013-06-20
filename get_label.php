@@ -5,7 +5,7 @@
  * and open the template in the editor.
  */
 
-include 'database.php';
+include 'class/database.php';
 $db = new Database(); 
 
 $lab = $_POST['label'];

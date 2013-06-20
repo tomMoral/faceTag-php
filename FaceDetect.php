@@ -5,7 +5,7 @@
  * and open the template in the editor.
  */
 function face_detect($files_list){
-    $cmd = "export DYLD_LIBRARY_PATH='';";
+    $cmd = "export DYLD_LIBRARY_PATH='';which python;";
     $files_cmd = "";
     $res = array();
     
@@ -14,21 +14,25 @@ function face_detect($files_list){
             $files_cmd .= (($n == 0)?"'":"' '") . $f->filename;
     $files_cmd .= "'";
     
-    $cmd .= "python face_detect.py $files_cmd ";
-    $files = exec( $cmd , $output);
+    $cmd .= "python face_detect.py $files_cmd 2>&1";
+    exec( $cmd , $output);
 
     $res['next'] = 0;
     $res['html'] = "";
-   include 'database.php';
-   $dbh = new Database();
-   
-   foreach ($output as $n => $f)
-       if($n > 1){
-            $res['html'] .= "<img src='$f'/>";
-            $dbh->query("INSERT IGNORE INTO DB_contents (path, labels) VALUES (?,?)",
-                         array($f, ""));
-        }
-    return $res;
+    include 'class/database.php';
+    $dbh = new Database();
+    $res['count'] = 0;
+    $res['out'] = "";
+    foreach ($output as $n => $f)
+        if($f[0] == '@'){
+             $res['html'] .= "<img src='".substr($f, 2)."'/>";
+             $dbh->query("INSERT IGNORE INTO DB_contents (path, labels) VALUES (?,?)",
+                          array(substr($f, 2), ""));
+             $res['count']++;
+         }
+        else
+            $res['out'] .= $f."<br/>";
+     return $res;
 }
 
 if(isset($_POST['files'])){

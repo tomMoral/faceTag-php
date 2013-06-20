@@ -3,7 +3,7 @@
     $list_t = substr($_POST['list_t'],0,-1);
     $list_n = substr($_POST['list_n'],0,-1);
     
-    include 'database.php';
+    include 'class/database.php';
     $db = new Database();
     if($lab != 'R'){
         $pos = strval($lab);

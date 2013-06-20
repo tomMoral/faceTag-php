@@ -24,5 +24,12 @@ img{
     border: 10px green solid;
 }
 
+.true{
+    border: 10px green solid;
+}
+
+.false{
+    border: 10px red solid;
+}
 
 

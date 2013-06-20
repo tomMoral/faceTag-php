@@ -6,11 +6,13 @@
     </head>
     <body>
         <?php
-        if(isset($_GET['query'])){
+        if(isset($_GET['query']) && !file_exists("image/".$_GET['query'])){
             $query = $_GET['query'];
             $page = 1;
         ?>
-            <h1>Grabbing the pictures from google image for the query : <? echo $query;?> </h1>
+            <h1>Grabbing the pictures from Google/Flickr image for the query : <? echo $query;?> </h1>
+            <div id="status">Grabbed 0 faces...<button onclick="location.href='faceTag.php';">Tag faces</button></div>
+            <div id="stderr"></div>
             <div id="GIG"></div>
             <div id="IL"></div>
             <div id="FD"></div>
@@ -19,7 +21,7 @@
             function display($q){
                 return document.getElementById($q);
             }
-            var debug = false;
+            var debug = true;
             var $query = encodeURIComponent('<?echo $query;?>'),
                 $page = <?echo $page;?>;
             var queues= { "GIG": ["query=<?echo $query;?>&page=1"],
@@ -31,6 +33,9 @@
                           "FD" : "FaceDetect.php"
             };
             var next = { "GIG": "IL", "IL" : "FD"};
+            var grabbed = 0;
+            var stat = document.getElementById("status"),
+                stderr = document.getElementById("stderr");
             
             function add_work($q, $w){
                 queues[$q].push($w);
@@ -43,8 +48,15 @@
                     if (xhr.readyState === 4 && xhr.status === 200) {
                         console.log(xhr.responseText);
                         var data = JSON.parse(xhr.responseText);
-                        if ($q === 'FD')
-                            display($q).innerHTML += data['html'] + "</br>";
+                        if ($q === 'FD'){
+                            if(data['html'] !== '')
+                                display($q).innerHTML += data['html'] + "</br>";
+                            else
+                                stderr.innerHTML = data['out'];
+                            grabbed += data['count'];
+                            stat.innerHTML = "Grabbed " + grabbed + " faces ...";
+                            stat.innerHTML += "<button onclick=\"location.href='faceTag.php';\">Tag faces</button>"
+                        }
                         else
                             display($q).innerHTML = data['html'] + "</br>";
                         if($q === 'GIG' && data['work'] != null && !debug ){
@@ -84,6 +96,7 @@
                 Query: <input type="text" name="query">
                 <input type="submit" value="Grab">
             </form>
+        <button onclick="location.href='faceTag.php';">Tag faces</button>
 
         <?php    
         }

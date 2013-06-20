@@ -7,7 +7,7 @@
 
 
 <body>
-    <h1>Face tag : </h1></br>   
+    <h1>Face tag : <button onclick="javascript:location.href='index.php'">Get more faces</button></h1></br>   
     <form action="add_faces.php" method="post" enctype="multipart/form-data">
         <input type="file" name="pics[]" multiple>
         <input type="submit" value="Submit">
@@ -18,7 +18,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-include 'database.php';
+include 'class/database.php';
 $db = new Database();
 
 $labels = $db->query("SELECT *  FROM DB_labels");

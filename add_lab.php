@@ -5,7 +5,7 @@
  * and open the template in the editor.
  */
 if(isset($_POST['label'])){
-    include 'database.php';
+    include 'class/database.php';
     $dbh = new Database();
     
     $lab = $_POST['label'];
