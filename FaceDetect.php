@@ -22,11 +22,12 @@ function face_detect($files_list){
    include 'database.php';
    $dbh = new Database();
    
-   foreach ($files as $output){
-       $res['html'] .= "<img src='$f'/>";
-       $dbh->query("INSERT IGNORE INTO DB_contents (path, labels) VALUES (?,?)",
-                    array($f, ""));
-    }
+   foreach ($output as $n => $f)
+       if($n > 1){
+            $res['html'] .= "<img src='$f'/>";
+            $dbh->query("INSERT IGNORE INTO DB_contents (path, labels) VALUES (?,?)",
+                         array($f, ""));
+        }
     return $res;
 }
 

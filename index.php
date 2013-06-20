@@ -19,6 +19,7 @@
             function display($q){
                 return document.getElementById($q);
             }
+            var debug = false;
             var $query = encodeURIComponent('<?echo $query;?>'),
                 $page = <?echo $page;?>;
             var queues= { "GIG": ["query=<?echo $query;?>&page=1"],
@@ -46,7 +47,7 @@
                             display($q).innerHTML += data['html'] + "</br>";
                         else
                             display($q).innerHTML = data['html'] + "</br>";
-                        if($q === 'GIG' && data['work'] != null ){
+                        if($q === 'GIG' && data['work'] != null && !debug ){
                             $page ++;
                             add_work($q, "query=<?echo $query;?>&page=" + $page);
                         }
