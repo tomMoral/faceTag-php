@@ -5,7 +5,7 @@
  * and open the template in the editor.
  */
 function face_detect($files_list){
-    $cmd = "export DYLD_LIBRARY_PATH='';which python;";
+    $cmd = "export DYLD_LIBRARY_PATH='';";
     $files_cmd = "";
     $res = array();
     

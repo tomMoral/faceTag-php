@@ -21,7 +21,7 @@
             function display($q){
                 return document.getElementById($q);
             }
-            var debug = true;
+            var debug = false;
             var $query = encodeURIComponent('<?echo $query;?>'),
                 $page = <?echo $page;?>;
             var queues= { "GIG": ["query=<?echo $query;?>&page=1"],
